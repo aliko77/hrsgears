@@ -15,3 +15,6 @@ RegisterNetEvent("hrsgears:SetManualMode", function(data)
     manualon = data
 end)
 ```
+## Thanks and Credits
+
+- [@HugoSimoes12345]([https://www.github.com/octokatherine](https://github.com/HugoSimoes12345/HRSGears)) tasarım ve geliştirme için.
