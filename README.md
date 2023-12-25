@@ -3,7 +3,8 @@ A manual gear mode you can use for 0r-hudv2. Support is not provided. It is only
 
 # Hud Events
 ```
-RegisterNetEvent("0r-hud:Client:SetManualGear", function(newGear)    
+RegisterNetEvent("0r-hud:Client:SetManualGear", function(newGear)
+    Koci.Client.HUD.data.vehicle.manualGear = newGear
 end)
 TriggerEvent("hrsgears:SetManualMode", Koci.Client.HUD.data.vehicle.manualMode)
 ```
