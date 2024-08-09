@@ -46,6 +46,8 @@ Citizen.CreateThread(function()
                     end
                 end
             end
+        elseif ready then
+            resetvehicle()
         end
     end
 end)
@@ -268,6 +270,7 @@ function getinfo(gea)
         return gea
     end
 end
+
 function round(value, numDecimalPlaces)
     if numDecimalPlaces then
         local power = 10 ^ numDecimalPlaces

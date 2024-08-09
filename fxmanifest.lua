@@ -3,7 +3,7 @@ games {'gta5'}
 
 author 'Hugo Rafael Simoes'
 description 'CaixaManual'
-version '1.0'
+version '1.1'
 
 
 client_scripts {
