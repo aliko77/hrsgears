@@ -16,18 +16,20 @@ RegisterNetEvent("hrsgears:SetManualMode", function(data)
 end)
 
 Citizen.CreateThread(function()
+    local sleep = 500
     while true do
-        Citizen.Wait(100)
+        Citizen.Wait(sleep)
+        sleep = 500
         if manualon then
             local ped = PlayerPedId()
             local newveh = GetVehiclePedIsIn(ped, false)
             local class = GetVehicleClass(newveh)
-            if newveh == vehicle then
-            elseif newveh == 0 and vehicle ~= nil then
+            if newveh ~= vehicle and newveh == 0 and vehicle ~= nil then
                 resetvehicle()
             else
                 if GetPedInVehicleSeat(newveh, -1) == ped then
                     if class ~= 13 and class ~= 14 and class ~= 15 and class ~= 16 and class ~= 21 then
+                        sleep = 5
                         vehicle = newveh
                         hash = GetEntityModel(newveh)
                         if GetVehicleMod(vehicle, 13) < 0 then
@@ -73,9 +75,12 @@ function resetvehicle()
 end
 
 Citizen.CreateThread(function()
+    local sleep = 500
     while true do
-        Citizen.Wait(0)
-        if manualon == true and vehicle ~= nil then
+        Citizen.Wait(sleep)
+        sleep = 500
+        if manualon and vehicle then
+            sleep = 5
             DisableControlAction(0, 36, true)
             DisableControlAction(0, 21, true)
         end
@@ -83,34 +88,33 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
+    local sleep = 500
     while true do
-        Citizen.Wait(0)
-        if manualon == true and vehicle ~= nil then
-            if vehicle ~= nil then
-                -- Shift up and down
-                if ready == true then
-                    if IsDisabledControlJustPressed(0, 21) then
-                        if selectedgear <= numgears - 1 then
-                            DisableControlAction(0, 71, true)
-                            Wait(300)
-                            selectedgear = selectedgear + 1
-                            DisableControlAction(0, 71, false)
-                            SimulateGears()
-                        end
-                    elseif IsDisabledControlJustPressed(0, 36) then
-                        if selectedgear > -1 then
-                            DisableControlAction(0, 71, true)
-                            Wait(300)
-                            selectedgear = selectedgear - 1
-                            DisableControlAction(0, 71, false)
-                            SimulateGears()
-                        end
-                    end
+        Citizen.Wait(sleep)
+        sleep = 500
+        if manualon and vehicle and ready then
+            sleep = 5
+            if IsDisabledControlJustPressed(0, 21) then
+                if selectedgear <= numgears - 1 then
+                    DisableControlAction(0, 71, true)
+                    Wait(300)
+                    selectedgear = selectedgear + 1
+                    DisableControlAction(0, 71, false)
+                    SimulateGears()
+                end
+            elseif IsDisabledControlJustPressed(0, 36) then
+                if selectedgear > -1 then
+                    DisableControlAction(0, 71, true)
+                    Wait(300)
+                    selectedgear = selectedgear - 1
+                    DisableControlAction(0, 71, false)
+                    SimulateGears()
                 end
             end
         end
     end
 end)
+
 function SimulateGears()
     local engineup = GetVehicleMod(vehicle, 11)
 
@@ -174,9 +178,12 @@ function SimulateGears()
 end
 
 Citizen.CreateThread(function()
+    local sleep = 500
     while true do
-        Citizen.Wait(0)
-        if manualon == true and vehicle ~= nil then
+        Citizen.Wait(sleep)
+        sleep = 500
+        if manualon and vehicle then
+            sleep = 5
             if selectedgear == -1 then
                 if GetVehicleCurrentGear(vehicle) == 1 then
                     DisableControlAction(0, 71, true)
@@ -193,23 +200,22 @@ Citizen.CreateThread(function()
                     SetVehicleHandlingFloat(vehicle, "CHandlingData", "fHandBrakeForce", hbrake)
                 end
             end
-        else
-            Citizen.Wait(100)
         end
     end
 end)
 
 Citizen.CreateThread(function()
+    local sleep = 500
     while true do
-        Citizen.Wait(0)
-        if vehicle ~= nil and selectedgear ~= 0 then
+        Citizen.Wait(sleep)
+        sleep = 500
+        if manualon and vehicle and selectedgear ~= 0 then
+            sleep = 5
             local speed = GetEntitySpeed(vehicle)
-
             if currspeedlimit ~= nil then
                 if speed >= currspeedlimit then
                     if Config.enginebrake == true then
                         if speed / currspeedlimit > 1.1 then
-                            --print('dead')
                             local hhhh = speed / currspeedlimit
                             SetVehicleCurrentRpm(vehicle, hhhh)
                             SetVehicleCheatPowerIncrease(vehicle, -100.0)
