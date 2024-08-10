@@ -24,7 +24,8 @@ Citizen.CreateThread(function()
             local ped = PlayerPedId()
             local newveh = GetVehiclePedIsIn(ped, false)
             local class = GetVehicleClass(newveh)
-            if newveh ~= vehicle and newveh == 0 and vehicle ~= nil then
+            if newveh == vehicle then
+            elseif newveh ~= vehicle and newveh == 0 and vehicle ~= nil then
                 resetvehicle()
             else
                 if GetPedInVehicleSeat(newveh, -1) == ped then
